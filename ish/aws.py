@@ -26,7 +26,7 @@ def name_tag_targets_for_instances(ilist):
                 name = tag['Value']
                 if name not in tag_nodes:
                     tag_nodes[name] = []
-                tag_nodes[name].append(i.private_ip_address)
+                tag_nodes[name].append(i.public_ip_address)
 
     return [('name:{}'.format(tag), ips) for tag, ips in tag_nodes.items()]
 
@@ -120,21 +120,21 @@ def targets_for_instances(_instances):
     Aggregate all possible instance mappings
     """
     by_id = id_targets_for_instances(_instances)
-    by_image = ami_targets_for_instances(_instances)
+    # by_image = ami_targets_for_instances(_instances)
     by_name_tag = name_tag_targets_for_instances(_instances)
     by_environment_tag = environment_tag_targets_for_instances(_instances)
     by_asg = asg_targets_for_instances(_instances)
-    by_oin = opsworks_instance_name_targets_for_instances(_instances)
-    by_ois = opsworks_instance_stack_targets_for_instances(_instances)
+    # by_oin = opsworks_instance_name_targets_for_instances(_instances)
+    # by_ois = opsworks_instance_stack_targets_for_instances(_instances)
 
     return dict(
         by_id +
         by_name_tag +
         by_environment_tag +
-        by_image +
-        by_asg +
-        by_ois +
-        by_oin
+        # by_image +
+        by_asg
+        # by_ois +
+        # by_oin
         )
 
 
